@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id='btn'>发送 Ajax 请求</button>
+    <script>
+        /* 
+        
+            低版本 IE 缓存问题：
+
+            在请求地址不发生变化的情况下，只有第一次请求会真正发送到服务器端，后序的请求
+            都会从浏览器缓存中获取结果。即使服务器端的数据更新了，客户端依然拿的是缓存中
+            的旧数据。
+
+            解决办法：
+            xhr.open('get', 'http://localhost:3000/cache?random=' + Math.random());
+            通过在请求中添加随机参数使每次的请求地址不同来解决。
+            
+        */
+
+        window.onload = function() {
+            let btn = document.getElementById('btn');
+
+            btn.onclick = function() {
+                let xhr = new XMLHttpRequest();
+
+                // xhr.open('get', 'http://localhost:3000/cache');
+                xhr.open('get', 'http://localhost:3000/cache?random=' + Math.random());
+            
+                xhr.send();
+
+                xhr.onreadystatechange = function() {
+                
+                    if(xhr.readyState === 4 && xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    }
+                }
+
+            
+            }
+        }
+       
+    </script>
+</body>
+</html>

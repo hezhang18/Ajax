@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+        
+            Ajax 状态码：
+
+            创建 Ajax 对象，配置 Ajax 对象，发送请求，以及接收完服务器端的响应数据，
+            这些过程中的每一个步骤都会对应一个数值，这个数值就是 Ajax 状态码。
+
+            0: 请求未初始化（还没有调用 open）
+            1: 请求已经建立，但是还没有发送（还没有调用 send）
+            2: 请求已经发送
+            3: 请求正在处理中，通常响应中已经有部分数据可以用了
+            4: 响应已经完成，可以获取并使用服务器的响应了
+
+            xhr.readyState // 获取 Ajax 状态码
+
+            onreadystatechange 事件：当 Ajax 状态码发生变化时自动触发该事件。
+
+            两种获取服务端响应方式的区别：
+
+            区别描述                onload 事件          onreadystatechange 事件
+            是否兼容IE低版本         否                   是
+            是否需要判断Ajax状态码    否                   是    
+            被调用次数               一次                 多次
+            
+        */
+
+        let xhr = new XMLHttpRequest();
+        console.log('fir ' + xhr.readyState);
+
+        xhr.open('get', 'http://localhost:3000/readyState');
+        console.log('sec ' + xhr.readyState);
+       
+        xhr.send();
+    
+        xhr.onreadystatechange = function() {
+            console.log('thr ' + xhr.readyState);
+           
+            if(xhr.readyState === 4) {
+                console.log(xhr.responseText);
+            }
+        }
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+
+            POST 请求参数格式：
+            
+            1. application/x-www-form-urlencoded
+               name=Jeff&age=20
+          
+            2. application/json 告诉服务器当前请求参数的格式是 JSON
+               {name: 'Jeff', age: '20'}
+            
+            JSON.stringify() // 将 JSON 对象转换为 JSON 字符串
+
+            注意：GET 请求不能提交 JSON 数据格式，传统表单提交也不支持 JSON 数据格式。
+        */
+
+        // 1. 创建 Ajax 对象
+        let xhr = new XMLHttpRequest();
+
+        // 2. 指定 Ajax 发送请求的方式与路径。参数 1: 请求方法；参数 2: 请求路径。
+        xhr.open('post', 'http://localhost:3000/jsonPost');
+
+        // 3. 设置请求参数格式的类型（POST 请求必须要设置）
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // 4. 发送请求。将 JSON 格式的参数转换为字符串传递。
+        xhr.send(JSON.stringify({name: 'Jeff', age: '20'}));
+
+        // 5. 获取服务器响应到客户端的数据
+        xhr.onload = function(){
+            console.log(JSON.parse(xhr.responseText));
+        }
+    </script>
+</body>
+</html>

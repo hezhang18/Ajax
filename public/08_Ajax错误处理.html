@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id='btn'>发送 Ajax 请求</button>
+    <script>
+        /* 
+        
+            Ajax 错误处理：
+
+            Ajax 状态码：表示 Ajax 请求的过程状态，Ajax 对象返回的；
+            HTTP 状态码：表示请求的处理结果，服务器返回的。
+            
+        */
+
+        window.onload = function() {
+            let btn = document.getElementById('btn');
+
+            btn.onclick = function() {
+                let xhr = new XMLHttpRequest();
+
+                xhr.open('get', 'http://localhost:3000/error');
+            
+                xhr.send();
+
+                xhr.onload = function() {
+                    console.log(xhr.responseText);
+
+                    // xhr.status 获取 http 状态码
+                    console.log(xhr.status);
+                    if(xhr.status == 400) {
+                        console.log('请求出错')
+                    }
+                }
+
+                // 当网络中断时会触发 onerror 事件
+                xhr.onerror = function() {
+                    console.log('网络中断，无法发送请求')
+                }
+            
+            }
+        }
+       
+    </script>
+</body>
+</html>

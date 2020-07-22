@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. 创建 Ajax 对象
+        let xhr = new XMLHttpRequest();
+
+        // 2. 指定 Ajax 发送请求的方式与路径。参数 1: 请求方法；参数 2: 请求路径。
+        xhr.open('get', 'http://localhost:3000/first');
+
+        // 3. 发送请求
+        xhr.send();
+
+        // 4. 获取服务器响应到客户端的数据
+        xhr.onload = function(){
+            console.log(xhr.responseText);
+        }
+    </script>
+</body>
+</html>
