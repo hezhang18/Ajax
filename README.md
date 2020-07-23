@@ -1,24 +1,26 @@
 # Ajax
 
-项目文件介绍：Ajax 相关内容的介绍及演示代码存放于 public 文件夹中。app.js 文件为服务器环境，可使用 node 或 pm2 开启。
+项目文件介绍：
 
-Ajax 技术需要运行在网站环境中才能生效，使用前需提前搭建网站环境。
+Ajax 相关内容的介绍及演示代码存放于 public 文件夹中，可运行在服务器环境下进行相关的演示和学习。其中 app.js 文件是已经搭建完成的本地服务器环境，可使用 node 或 pm2 开启。
 
-1 使用该项目中已经搭建好的服务器环境
+Ajax 技术需要运行在网站环境中才能生效，使用前需提前搭建网站环境。现提供两种可行方法：
 
-（1）克隆该项目到本地
+一、使用该项目中已经搭建好的服务器环境
 
-（2）命令行工具进入 Ajax 文件夹，输入 cnpm install 命令安装依赖
+（1）输入命令 git clone git@github.com:hezhang18/Ajax.git 将该项目克隆到本地；
 
-（3）输入 node app 开启本地服务器，浏览器访问本地 3000 端口即可访问到项目
+（2）进入 Ajax 文件夹，输入 cnpm install 命令安装依赖；
 
-2 自己手动搭建服务器环境（以 express 为例）
+（3）输入 node app 开启本地服务器，此时浏览器访问本地 3000 端口，页面出现 'Server Start Success' 表示开启成功。
+
+二、自己手动搭建服务器环境（以 express 为例）
 
 （1）创建项目文件夹 Ajax
 
 （2）进入 Ajax 文件夹，创建 public 文件夹用于存放前端项目文件
 
-（3）创建 app.js 文件，搭建本地服务器代码如下：
+（3）创建 app.js 文件，搭建本地服务器。代码如下：
 
 ```
 const express = require('express');
@@ -27,14 +29,22 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req, res)=>{
+    res.send('Server Start Success');
+})
+
 app.listen(3000);
 console.log('server start success');
 ```
-3 Ajax 封装源码
+
+（4）进入 Ajax 文件夹，输入 node app 开启本地服务器，此时浏览器访问本地 3000 端口，页面出现 'Server Start Success' 表示开启成功。
+
+三、Ajax 封装源码
+
 ```
 ajax({
     type: 'get',
-    url: 'http://localhost:3000',
+    url: 'http://localhost:3000/',
     data: {
         name: 'Jeff',
         age: '20'

@@ -8,6 +8,11 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 测试页面请求接口
+app.get('/', (req, res)=>{
+    res.send('Server Start Success');
+})
+
 // 02 页面请求接口
 app.get('/first', (req, res)=>{
     res.send('Hello Ajax');
@@ -51,4 +56,4 @@ app.get('/cache', (req, res)=>{
 })
 
 app.listen(3000);
-console.log('server start success');
+console.log('Server Start Success');
