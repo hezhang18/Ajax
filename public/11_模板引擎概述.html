@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/node_modules/art-template/lib/template-web.js"></script>
+</head>
+<body>
+    <!-- 
+        模板引擎：
+
+        使用模板引擎提供的模板语法，可以将数据和 HTML 拼接起来。
+
+        使用步骤：
+
+        1. 下载 art-template，在 HTML 页面引入库文件
+        <script src="./js/template-web.js"></script>
+
+        2. 准备 art-template 模板
+        <script type="text/html" id="tpl">
+            <div class="box"></div>
+        </script>
+
+        3. 告诉模板引擎将哪一个模板和哪一个数据进行拼接
+        let html = template('tpl', {username: 'Jeff', age: '20'});
+
+        4. 将拼接好的 html 字符串添加到页面中
+        document.getElementById('container').innerHTML = html;
+
+        5. 通过模板语法告诉模板引擎，数据和 html 字符串如何拼接
+            <script id='tpl' type='text/html'>
+                <div class="box"> {{username}} </div>
+            </script>
+     -->
+     <div id="container"></div>
+     <script type="text/html" id="tpl">
+         <h1>{{username}} {{age}}</h1>
+     </script>
+     <script type="text/javascript">
+        let html = template('tpl', {username: 'Jeff', age: '20'});
+        console.log(html);
+        window.onload = function(){
+            document.getElementById('container').innerHTML = html;
+        }
+     </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/ajax.js"></script>
+    <style>
+        #progress {
+            width: 600px;
+            height: 20px;
+            background-color: white;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 20px;
+            background-color: blue;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        FormData 作用：
+            1. 将 form 表单元素的 name 与 value 进行组合，实现表单数据的序列化，
+               从而减少表单元素的拼接，提高工作效率。
+            2. 异步上传文件
+
+            FormData 参数只能通过 xhr.send(formData) 方式传递，所以只能使用 post 方法。
+
+        FormData 方法：
+            // 获取 FormData 属性值。
+            formData.get('username');
+            // 设置 FormData 属性，如果属性已经存在则将其覆盖，不存在则创建。
+            formData.set('age', 18);
+            // 删除 FormData 属性
+            formData.delete('username');
+            // 追加 FormData 属性
+            formData.append('addr');
+
+            // set 与 append 的区别，对于已经存在的属性 set 会覆盖，append 会保留两个值。
+            // 传到服务器端只会接收其中靠后的值。
+
+        
+
+     -->
+
+    <!-- 1. FormData 对象的使用 -->
+    <form id="form" style="margin: 20px 0;">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="button" value="提交" id="btn">
+    </form>
+
+    <!-- 2. FormData 二进制文件的上传 -->
+    <div>
+        <label for="file">选择文件</label>
+        <input type="file" id="file">
+        <div id="progress" style="margin: 10px 0;">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+    <!-- 3. 图片文件上传实时预览 -->
+    <div id="showImg" style="margin: 20px 0;">
+
+    </div>
+
+    <script>
+        window.onload = function(){
+
+            // 1. FormData 对象的使用
+            let btn = document.getElementById('btn');
+            let form = document.getElementById('form');
+            btn.onclick = function(){
+                let formData = new FormData(form);
+                
+                let xhr = new XMLHttpRequest();
+                xhr.open('post', 'http://localhost:3000/formData');
+                xhr.send(formData);
+                xhr.onload = function(){
+                    console.log(xhr.responseText);
+                }
+
+                // 未封装对 FormData 的处理，暂时无法使用封装的 ajax
+                // ajax({
+                //     type: 'post',
+                //     url: 'http://localhost:3000/formData',
+                //     data: formData,
+                //     header: {
+                //         'Content-Type': 'application/x-www-form-urlencoded'
+                //     },
+                //     success: function(data) {
+                //         console.log(data);
+                //     },
+                //     error: function(data) {
+                //         console.log(data);
+                //     }
+                // })
+
+            }
+
+            // 2. FormData 二进制文件上传
+            // 获取文件选择控件
+            let file = document.getElementById('file');
+            let bar = document.getElementById('progress-bar');
+            let showImg = document.getElementById('showImg');
+            file.onchange = function() {
+                // 创建空的表单对象
+                let formData = new FormData();
+                // 将用户选择的文件追加到表单对象中
+                formData.append('attrName', this.files[0]);
+
+                let xhr = new XMLHttpRequest();
+                xhr.open('post', 'http://localhost:3000/upload');
+                
+                // FormData 文件上传进度展示
+                // 在文件上传的过程中持续触发
+                xhr.upload.onprogress = function(ev){
+                    let result = ev.loaded/ev.total*100 + '%';
+                    bar.style.width = result;
+                    bar.innerHTML = result;
+                }
+                
+                xhr.send(formData);
+                xhr.onload = function(){
+                    if(xhr.status === 200) {
+                        // 2. FormData 二进制文件上传
+                        // console.log(xhr.responseText);
+
+                        // 3. 图片文件上传实时预览
+                        let result = JSON.parse(xhr.responseText);
+                        let img = document.createElement('img');
+                        img.src = result.path;
+                        img.onload = function(){
+                            showImg.appendChild(img);
+                        }
+                    }
+                }
+            }
+
+
+            
+        }
+    </script>
+</body>
+</html>
