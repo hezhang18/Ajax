@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jsonp.js"></script>
+</head>
+<body>
+    <button id="btn">发送请求</button>
+    <!-- <script>
+        function fn(data) {
+            console.log('客户端回调 1 被调用');
+            console.log(data);
+        }
+        function fn2(data) {
+            console.log('客户端回调 2 被调用');
+            console.log(data);
+        }
+    </script> -->
+    <!-- 1. JSONP 请求实现 -->
+    <!-- <script src="http://localhost:3002/jsonp"></script> -->
+    
+    <!-- 2. JSONP 代码优化 -->
+    <!-- <script>
+        window.onload = function() {
+            let btn = document.getElementById('btn');
+            btn.onclick = function(){
+                let script = document.createElement('script');
+                script.src = 'http://localhost:3002/better?callback=fn2';
+                document.body.appendChild(script);
+                script.onload = function(){
+                    document.body.removeChild(script);
+                }
+            }
+        }
+    </script> -->
+
+    <!-- 3. JSONP 代码封装 -->
+    <script>
+        window.onload = function() {
+            let btn = document.getElementById('btn');
+            btn.onclick = function(){
+                jsonp({
+                    url: 'http://localhost:3002/better',
+                    data: {
+                        name: 'Jack',
+                        age: '35'
+                    },
+                    success: function(data) {
+                        console.log('客户端回调 3 被调用');
+                        console.log(data);
+                    }
+                })
+            } 
+        }
+
+        /* 
+        //  JSONP 封装
+        function jsonp(options) {
+            let params = '';
+            for(let attr in options.data){
+                params += '&' + attr + '=' + options.data[attr];
+            }
+            
+            // 定义随机 callback 函数名，避免发送多个不同 JSONP 请求时出现回调函数相互覆盖的情况
+            let callback = 'jsonp' + Math.random().toString().substring(2);
+            // 将回调函数挂载在全局，不需要再通过单独的 script 标签中定义回调函数
+            window[callback] = options.success;
+
+            let script = document.createElement('script');
+            script.src = options.url + '?callback=' + callback + params;
+            document.body.appendChild(script);
+            script.onload = function() {
+                document.body.removeChild(script);
+            }
+        } */
+    </script>
+</body>
+</html>

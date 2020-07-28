@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+        
+        JSONP
+        
+        jsonp 是 json with padding 的缩写，它不属于 Ajax 请求，但它可以模拟 Ajax 请求。
+
+        1. 将非同源的服务器请求地址写在 script 标签的 src 属性中(请求后必须返回合法的 Javascript 代码)
+        <script src="http://www.example.com"></script>
+        
+        2. 服务器响应数据必须是一个函数的调用，真正要发送给客户端的数据要作为函数调用的参数
+        const data = 'fn({name: 'Jeff', age: 20})';
+        res.send(data);
+
+        3. 在客户端全局作用域下定义函数 fn 
+        function fn(data){}
+
+        4. 在函数 fn 内部对服务器返回的数据进行处理
+
+        JSONP 演示代码在  cross_origin 文件夹中
+
+        */
+    </script>
+</body>
+</html>
