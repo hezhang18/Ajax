@@ -89,7 +89,7 @@ function ajax(options) {
     
     // 将 data 中要传递的对象类型参数转换为 & 连接的字符串类型参数
     for(let key in data){
-        dataArr.push(key + '=' +data[key]);
+        dataArr.push(key + '=' + data[key]);
     }
     params = dataArr.join('&');
 
